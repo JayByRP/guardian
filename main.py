@@ -252,7 +252,7 @@ async def post_template7(
 > some elements of your submission that
 > need attention. Address them carefully:
 > 
-{chr(10).join(f'> {comment}' for comment in comments)}
+{chr(10).join(f'> {comment}\n> \n' for comment in comments)}
 > 
 > We encourage you to revise and resubmit
 > your character once you've addressed the
