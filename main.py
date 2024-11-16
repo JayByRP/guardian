@@ -280,14 +280,15 @@ async def post_template7(
         if comment:
             comments.append(f"**[{i}] ::** {comment}")
 
-    template = f"""
+    template = """
 > Thank you for submitting your character.
 > We appreciate the effort you've put into it.
 > However, after careful review, there are
 > some elements of your submission that
 > need attention. Address them carefully:
 > 
-> {chr(10).join(f'> {comment}\n> \n' for comment in comments)}> 
+> {comments}
+> 
 > We encourage you to revise and resubmit
 > your character once you've addressed the
 > fixes. If after careful revision you would like
@@ -297,7 +298,7 @@ async def post_template7(
 > writing sample. Best regards,
 
 *⸻ 𝐓𝐡𝐞 𝐒𝐭𝐚𝐟𝐟 𝐓𝐞𝐚𝐦*
-""".strip()
+    """.strip().format(comments="\n> \n".join(comments))
 
     await interaction.channel.send(template)
     if mentions:
