@@ -7,4 +7,4 @@ If template 5, remove unverified role (if they have it) and add verified role (a
 If template 8, remove characterless role (if they have it) and add verified role (if they don't have it) to users
 
 Change channels to <#channel_id>
-Change roles to <#role_id>
+Change role ids

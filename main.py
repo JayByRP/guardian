@@ -242,6 +242,37 @@ async def post_template5(interaction: Interaction, mentions: str):
             ping_message = " ".join(mention_list)
             response_message += f"{ping_message}\n``` ```"
 
+    roles_to_add = ["1307013628326580295", "1307013626200326205"]
+    role_to_remove = "1307013626917421088"
+    successful_updates = []
+    failed_updates = []
+
+    for user_id in mention_list:
+        user = interaction.guild.get_member(int(user_id.strip('<@!>')))
+        if user:
+            try:
+                for role_id in roles_to_add:
+                    role = interaction.guild.get_role(role_id)
+                    if role and role not in user.roles:
+                        await user.add_roles(role)
+                        successful_updates.append(f"Added {role.name} to {user.mention}")
+
+                role = interaction.guild.get_role(role_to_remove)
+                if role and role in user.roles:
+                    await user.remove_roles(role)
+                    successful_updates.append(f"Removed {role.name} from {user.mention}")
+
+            except Exception as e:
+                failed_updates.append(f"{user.mention}: {str(e)}")
+
+    # Send the ephemeral message with the results
+    ephemeral_message = "Roles updated successfully for:\n" + "\n".join(successful_updates) if successful_updates else "No roles were updated successfully."
+
+    if failed_updates:
+        ephemeral_message += "\n\nFailed to update roles for:\n" + "\n".join(failed_updates)
+
+    await interaction.followup.send(ephemeral_message, ephemeral=True)
+
 @tree.command(name="bio_inconsistency", description="Denies bio approval because user didn't follow instructions or didn't read RP info")
 @app_commands.describe(mentions="Users to ping (comma-separated, e.g., @user1, @user2)")
 async def post_template6(interaction: Interaction, mentions: str):
