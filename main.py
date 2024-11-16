@@ -184,6 +184,8 @@ async def post_template1(interaction: Interaction, mentions: str):
             ping_message = " ".join(mention_list)
             await interaction.channel.send(ping_message)
 
+    await interaction.channel.send("``` ```")
+
 @tree.command(name="template2", description="Posts template 2")
 @app_commands.describe(mentions="Users to ping (comma-separated, e.g., @user1, @user2)")
 async def post_template2(interaction: Interaction, mentions: str):
@@ -196,6 +198,8 @@ async def post_template2(interaction: Interaction, mentions: str):
         if mention_list:
             ping_message = " ".join(mention_list)
             await interaction.channel.send(ping_message)
+
+    await interaction.channel.send("``` ```")
 
 @tree.command(name="template3", description="Posts template 3")
 @app_commands.describe(mentions="Users to ping (comma-separated, e.g., @user1, @user2)")
@@ -210,6 +214,8 @@ async def post_template3(interaction: Interaction, mentions: str):
             ping_message = " ".join(mention_list)
             await interaction.channel.send(ping_message)
 
+    await interaction.channel.send("``` ```")
+
 @tree.command(name="template4", description="Posts template 4")
 @app_commands.describe(mentions="Users to ping (comma-separated, e.g., @user1, @user2)")
 async def post_template4(interaction: Interaction, mentions: str):
@@ -222,6 +228,8 @@ async def post_template4(interaction: Interaction, mentions: str):
         if mention_list:
             ping_message = " ".join(mention_list)
             await interaction.channel.send(ping_message)
+
+    await interaction.channel.send("``` ```")
 
 @tree.command(name="template5", description="Posts template 5")
 @app_commands.describe(mentions="Users to ping (comma-separated, e.g., @user1, @user2)")
@@ -236,6 +244,8 @@ async def post_template5(interaction: Interaction, mentions: str):
             ping_message = " ".join(mention_list)
             await interaction.channel.send(ping_message)
 
+    await interaction.channel.send("``` ```")
+
 @tree.command(name="template6", description="Posts template 6")
 @app_commands.describe(mentions="Users to ping (comma-separated, e.g., @user1, @user2)")
 async def post_template6(interaction: Interaction, mentions: str):
@@ -248,6 +258,8 @@ async def post_template6(interaction: Interaction, mentions: str):
         if mention_list:
             ping_message = " ".join(mention_list)
             await interaction.channel.send(ping_message)
+
+    await interaction.channel.send("``` ```")
 
 @tree.command(
     name="template7",
@@ -274,11 +286,11 @@ async def post_template7(
         await interaction.response.send_message("❌ You don't have permission to use this command.", ephemeral=True)
         return
 
-    comments = [f"> {comment1}"]
+    comments = [f"**[1]** {comment1}"]
     optional_comments = [comment2, comment3, comment4, comment5]
-    for comment in optional_comments:
+    for i, comment in enumerate(optional_comments, start=2):
         if comment:
-            comments.append(f"> {comment}")
+            comments.append(f"> **[{i}]** {comment}")
 
     template = """
 > Thank you for submitting your character.
@@ -288,6 +300,7 @@ async def post_template7(
 > need attention. Address them carefully:
 > 
 > {comments}
+> 
 > 
 > We encourage you to revise and resubmit
 > your character once you've addressed the
@@ -300,13 +313,15 @@ async def post_template7(
 *⸻ 𝐓𝐡𝐞 𝐒𝐭𝐚𝐟𝐟 𝐓𝐞𝐚𝐦*
     """.strip().format(comments="\n> \n".join(comments))
 
+    await interaction.channel.send(template)
+
     if mentions:
         mention_list = parse_mentions(mentions)
         if mention_list:
             ping_message = " ".join(mention_list)
             await interaction.channel.send(ping_message)
-
-    await interaction.channel.send(template)
+    
+    await interaction.channel.send("``` ```")
 
 @tree.command(name="template8", description="Posts template 8")
 @app_commands.describe(mentions="Users to ping (comma-separated, e.g., @user1, @user2)")
@@ -320,7 +335,8 @@ async def post_template8(interaction: Interaction, mentions: str):
         if mention_list:
             ping_message = " ".join(mention_list)
             await interaction.channel.send(ping_message)
-            await interaction.channel.send("``` ```")
+    
+    await interaction.channel.send("``` ```")
 
 # FastAPI endpoints
 @app.get("/")
