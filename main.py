@@ -200,6 +200,8 @@ async def post_template2(interaction: Interaction, mentions: str):
             ping_message = " ".join(mention_list)
             response_message += f"{ping_message}\n``` ```"
 
+    await interaction.response.send_message(response_message)
+
 @tree.command(name="checkpoint_literacy", description="Denies access to user because of insufficient literacy")
 @app_commands.describe(mentions="Users to ping (comma-separated, e.g., @user1, @user2)")
 async def post_template3(interaction: Interaction, mentions: str):
@@ -213,6 +215,8 @@ async def post_template3(interaction: Interaction, mentions: str):
         if mention_list:
             ping_message = " ".join(mention_list)
             response_message += f"{ping_message}\n``` ```"
+
+    await interaction.response.send_message(response_message)
 
 @tree.command(name="checkpoint_fixes", description="Denies access to user because of needed fixes in RP sample")
 @app_commands.describe(mentions="Users to ping (comma-separated, e.g., @user1, @user2)")
@@ -228,6 +232,8 @@ async def post_template4(interaction: Interaction, mentions: str):
             ping_message = " ".join(mention_list)
             response_message += f"{ping_message}\n``` ```"
 
+    await interaction.response.send_message(response_message)
+
 @tree.command(name="checkpoint_approved", description="Allows access to user and changes user roles")
 @app_commands.describe(mentions="Users to ping (comma-separated, e.g., @user1, @user2)")
 async def post_template5(interaction: Interaction, mentions: str):
@@ -241,6 +247,8 @@ async def post_template5(interaction: Interaction, mentions: str):
         if mention_list:
             ping_message = " ".join(mention_list)
             response_message += f"{ping_message}\n``` ```"
+
+    await interaction.response.send_message(response_message)
 
     roles_to_add = ["1307013628326580295", "1307013626200326205"]
     role_to_remove = "1307013626917421088"
@@ -297,6 +305,8 @@ async def post_template6(interaction: Interaction, mentions: str):
         if mention_list:
             ping_message = " ".join(mention_list)
             response_message += f"{ping_message}\n``` ```"
+
+    await interaction.response.send_message(response_message)
 
 @tree.command(
     name="bio_fixes",
@@ -358,6 +368,8 @@ async def post_template7(
             ping_message = " ".join(mention_list)
             response_message += f"{ping_message}\n``` ```"
 
+    await interaction.response.send_message(response_message)
+
 @tree.command(name="bio_approved", description="Approves bio and changes user roles")
 @app_commands.describe(mentions="Users to ping (comma-separated, e.g., @user1, @user2)")
 async def post_template8(interaction: Interaction, mentions: str):
@@ -371,6 +383,8 @@ async def post_template8(interaction: Interaction, mentions: str):
         if mention_list:
             ping_message = " ".join(mention_list)
             response_message += f"{ping_message}\n``` ```"
+
+    await interaction.response.send_message(response_message)
 
 # FastAPI endpoints
 @app.get("/")
