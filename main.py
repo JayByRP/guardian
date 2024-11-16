@@ -262,7 +262,7 @@ async def post_template6(interaction: Interaction, mentions: str):
 
 @tree.command(
     name="bio_fixes",
-    description="Denies bio approval because fixes are to be made. Include fixes in up to 5 comments (each is a separate paragraph)"
+    description="Denies bio approval because fixes are to be made. Include fixes in up to 5 comments"
 )
 @app_commands.describe(
     mentions="Users to ping (comma-separated, e.g., @user1, @user2)",
