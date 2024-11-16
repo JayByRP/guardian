@@ -164,54 +164,90 @@ def has_required_role(member_roles: List[int]) -> bool:
     """Check if the user has any of the required roles."""
     return any(role.id in ALLOWED_ROLES for role in member_roles)
 
-# Template commands
+def parse_mentions(mentions_str: str) -> List[str]:
+    """Parse comma-separated mentions string into a list of user IDs."""
+    if not mentions_str:
+        return []
+    return [mention.strip() for mention in mentions_str.split(',')]
+
+# Template commands with ping support
 @tree.command(name="template1", description="Posts template 1")
-async def post_template1(interaction: Interaction):
+@app_commands.describe(mentions="Users to ping (comma-separated, e.g., @user1, @user2)")
+async def post_template1(interaction: Interaction, mentions: str):
     if not has_required_role(interaction.user.roles):
         await interaction.response.send_message("❌ You don't have permission to use this command.", ephemeral=True)
         return
-    await interaction.response.defer(ephemeral=True)
     await interaction.channel.send(TEMPLATES["template1"])
+    if mentions:
+        mention_list = parse_mentions(mentions)
+        if mention_list:
+            ping_message = " ".join(mention_list)
+            await interaction.channel.send(ping_message)
 
 @tree.command(name="template2", description="Posts template 2")
-async def post_template2(interaction: Interaction):
+@app_commands.describe(mentions="Users to ping (comma-separated, e.g., @user1, @user2)")
+async def post_template2(interaction: Interaction, mentions: str):
     if not has_required_role(interaction.user.roles):
         await interaction.response.send_message("❌ You don't have permission to use this command.", ephemeral=True)
         return
-    await interaction.response.defer(ephemeral=True)
     await interaction.channel.send(TEMPLATES["template2"])
+    if mentions:
+        mention_list = parse_mentions(mentions)
+        if mention_list:
+            ping_message = " ".join(mention_list)
+            await interaction.channel.send(ping_message)
 
 @tree.command(name="template3", description="Posts template 3")
-async def post_template3(interaction: Interaction):
+@app_commands.describe(mentions="Users to ping (comma-separated, e.g., @user1, @user2)")
+async def post_template3(interaction: Interaction, mentions: str):
     if not has_required_role(interaction.user.roles):
         await interaction.response.send_message("❌ You don't have permission to use this command.", ephemeral=True)
         return
-    await interaction.response.defer(ephemeral=True)
     await interaction.channel.send(TEMPLATES["template3"])
+    if mentions:
+        mention_list = parse_mentions(mentions)
+        if mention_list:
+            ping_message = " ".join(mention_list)
+            await interaction.channel.send(ping_message)
 
 @tree.command(name="template4", description="Posts template 4")
-async def post_template4(interaction: Interaction):
+@app_commands.describe(mentions="Users to ping (comma-separated, e.g., @user1, @user2)")
+async def post_template4(interaction: Interaction, mentions: str):
     if not has_required_role(interaction.user.roles):
         await interaction.response.send_message("❌ You don't have permission to use this command.", ephemeral=True)
         return
-    await interaction.response.defer(ephemeral=True)
     await interaction.channel.send(TEMPLATES["template4"])
+    if mentions:
+        mention_list = parse_mentions(mentions)
+        if mention_list:
+            ping_message = " ".join(mention_list)
+            await interaction.channel.send(ping_message)
 
 @tree.command(name="template5", description="Posts template 5")
-async def post_template5(interaction: Interaction):
+@app_commands.describe(mentions="Users to ping (comma-separated, e.g., @user1, @user2)")
+async def post_template5(interaction: Interaction, mentions: str):
     if not has_required_role(interaction.user.roles):
         await interaction.response.send_message("❌ You don't have permission to use this command.", ephemeral=True)
         return
-    await interaction.response.defer(ephemeral=True)
     await interaction.channel.send(TEMPLATES["template5"])
+    if mentions:
+        mention_list = parse_mentions(mentions)
+        if mention_list:
+            ping_message = " ".join(mention_list)
+            await interaction.channel.send(ping_message)
 
 @tree.command(name="template6", description="Posts template 6")
-async def post_template6(interaction: Interaction):
+@app_commands.describe(mentions="Users to ping (comma-separated, e.g., @user1, @user2)")
+async def post_template6(interaction: Interaction, mentions: str):
     if not has_required_role(interaction.user.roles):
         await interaction.response.send_message("❌ You don't have permission to use this command.", ephemeral=True)
         return
-    await interaction.response.defer(ephemeral=True)
     await interaction.channel.send(TEMPLATES["template6"])
+    if mentions:
+        mention_list = parse_mentions(mentions)
+        if mention_list:
+            ping_message = " ".join(mention_list)
+            await interaction.channel.send(ping_message)
 
 @tree.command(
     name="template7",
@@ -222,11 +258,13 @@ async def post_template6(interaction: Interaction):
     comment2="Second paragraph (optional)",
     comment3="Third paragraph (optional)",
     comment4="Fourth paragraph (optional)",
-    comment5="Fifth paragraph (optional)"
+    comment5="Fifth paragraph (optional)",
+    mentions="Users to ping (comma-separated, e.g., @user1, @user2)"
 )
 async def post_template7(
     interaction: Interaction,
     comment1: str,
+    mentions: str,
     comment2: str = None,
     comment3: str = None,
     comment4: str = None,
@@ -236,10 +274,7 @@ async def post_template7(
         await interaction.response.send_message("❌ You don't have permission to use this command.", ephemeral=True)
         return
 
-    # Build comments section
     comments = [f"**[1] ::** {comment1}"]
-    
-    # Add optional comments if provided
     optional_comments = [comment2, comment3, comment4, comment5]
     for i, comment in enumerate(optional_comments, start=2):
         if comment:
@@ -252,8 +287,7 @@ async def post_template7(
 > some elements of your submission that
 > need attention. Address them carefully:
 > 
-{chr(10).join(f'> {comment}\n> \n' for comment in comments)}
-> 
+> {chr(10).join(f'> {comment}\n> \n' for comment in comments)}> 
 > We encourage you to revise and resubmit
 > your character once you've addressed the
 > fixes. If after careful revision you would like
@@ -265,17 +299,25 @@ async def post_template7(
 *⸻ 𝐓𝐡𝐞 𝐒𝐭𝐚𝐟𝐟 𝐓𝐞𝐚𝐦*
 """.strip()
 
-    # Send message without showing command user
-    await interaction.response.defer(ephemeral=True)
     await interaction.channel.send(template)
+    if mentions:
+        mention_list = parse_mentions(mentions)
+        if mention_list:
+            ping_message = " ".join(mention_list)
+            await interaction.channel.send(ping_message)
 
 @tree.command(name="template8", description="Posts template 8")
-async def post_template8(interaction: Interaction):
+@app_commands.describe(mentions="Users to ping (comma-separated, e.g., @user1, @user2)")
+async def post_template8(interaction: Interaction, mentions: str):
     if not has_required_role(interaction.user.roles):
         await interaction.response.send_message("❌ You don't have permission to use this command.", ephemeral=True)
         return
-    await interaction.response.defer(ephemeral=True)
     await interaction.channel.send(TEMPLATES["template8"])
+    if mentions:
+        mention_list = parse_mentions(mentions)
+        if mention_list:
+            ping_message = " ".join(mention_list)
+            await interaction.channel.send(ping_message)
 
 # FastAPI endpoints
 @app.get("/")
