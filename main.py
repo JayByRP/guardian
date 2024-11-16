@@ -298,7 +298,7 @@ async def post_template7(
 > writing sample. Best regards,
 
 *⸻ 𝐓𝐡𝐞 𝐒𝐭𝐚𝐟𝐟 𝐓𝐞𝐚𝐦*
-    """.strip().format(comments="> \n> ".join(comments))
+    """.strip().format(comments="\n> \n".join(comments))
 
     if mentions:
         mention_list = parse_mentions(mentions)
@@ -320,6 +320,7 @@ async def post_template8(interaction: Interaction, mentions: str):
         if mention_list:
             ping_message = " ".join(mention_list)
             await interaction.channel.send(ping_message)
+            await interaction.channel.send("``` ```")
 
 # FastAPI endpoints
 @app.get("/")
