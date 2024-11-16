@@ -257,19 +257,16 @@ async def post_template5(interaction: Interaction, mentions: str):
 
     for user_id in mention_list:
         try:
-            # Extract the ID regardless of mention format
             user_id = int(user_id.strip('<@!>')) if user_id.startswith('<@') else int(user_id)
-            user = await interaction.guild.fetch_member(user_id)  # Fetch ensures user exists
+            user = await interaction.guild.fetch_member(user_id)
             
             if user:
-                # Add roles
                 for role_id in roles_to_add:
                     role = interaction.guild.get_role(int(role_id))
                     if role and role not in user.roles:
                         await user.add_roles(role)
                         successful_updates.append(f"Added {role.name} to {user.mention}")
                 
-                # Remove role
                 role = interaction.guild.get_role(int(role_to_remove))
                 if role and role in user.roles:
                     await user.remove_roles(role)
@@ -280,7 +277,6 @@ async def post_template5(interaction: Interaction, mentions: str):
         except Exception as e:
             failed_updates.append(f"Error with user {user_id}: {str(e)}")
 
-    # Send the ephemeral message with the results
     ephemeral_message = (
         "Roles updated successfully for:\n" + "\n".join(successful_updates)
         if successful_updates else "No roles were updated successfully."
@@ -384,6 +380,42 @@ async def post_template8(interaction: Interaction, mentions: str):
             response_message += f"{ping_message}\n``` ```"
 
     await interaction.response.send_message(response_message)
+
+    role_to_add = "1307013626200326205"
+    role_to_remove = "1307013626917421088"
+    successful_updates = []
+    failed_updates = []
+
+    for user_id in mention_list:
+        try:
+            user_id = int(user_id.strip('<@!>')) if user_id.startswith('<@') else int(user_id)
+            user = await interaction.guild.fetch_member(user_id)
+            
+            if user:
+                role = interaction.guild.get_role(int(role_to_add))
+                if role and role not in user.roles:
+                    await user.add_roles(role)
+                    successful_updates.append(f"Added {role.name} to {user.mention}")
+                
+                role = interaction.guild.get_role(int(role_to_remove))
+                if role and role in user.roles:
+                    await user.remove_roles(role)
+                    successful_updates.append(f"Removed {role.name} from {user.mention}")
+            else:
+                failed_updates.append(f"User with ID {user_id} not found.")
+
+        except Exception as e:
+            failed_updates.append(f"Error with user {user_id}: {str(e)}")
+
+    ephemeral_message = (
+        "Roles updated successfully for:\n" + "\n".join(successful_updates)
+        if successful_updates else "No roles were updated successfully."
+    )
+
+    if failed_updates:
+        ephemeral_message += "\n\nFailed to update roles for:\n" + "\n".join(failed_updates)
+
+    await interaction.followup.send(ephemeral_message, ephemeral=True)
 
 # FastAPI endpoints
 @app.get("/")
