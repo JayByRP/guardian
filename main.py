@@ -176,14 +176,15 @@ async def post_template1(interaction: Interaction, mentions: str):
     if not has_required_role(interaction.user.roles):
         await interaction.response.send_message("❌ You don't have permission to use this command.", ephemeral=True)
         return
-    await interaction.response.send_message(TEMPLATES["template1"])
+    response_message = f"{TEMPLATES['template1']}\n"
+    
     if mentions:
         mention_list = parse_mentions(mentions)
         if mention_list:
             ping_message = " ".join(mention_list)
-            await interaction.response.send_message(ping_message)
+            response_message += f"{ping_message}\n``` ```"  # Add mentions and code block
 
-    await interaction.response.send_message("``` ```")
+    await interaction.response.send_message(response_message)
 
 @tree.command(name="checkpoint_format", description="Denies access to user because of wrong RP sample format or invalid access")
 @app_commands.describe(mentions="Users to ping (comma-separated, e.g., @user1, @user2)")
