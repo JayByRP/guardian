@@ -170,7 +170,7 @@ def parse_mentions(mentions_str: str) -> List[str]:
     return [mention.strip() for mention in mentions_str.split(',')]
 
 # Template commands with ping support
-@tree.command(name="template1", description="Posts template 1")
+@tree.command(name="checkpoint_minor", description="Denies access to underage users")
 @app_commands.describe(mentions="Users to ping (comma-separated, e.g., @user1, @user2)")
 async def post_template1(interaction: Interaction, mentions: str):
     if not has_required_role(interaction.user.roles):
@@ -185,7 +185,7 @@ async def post_template1(interaction: Interaction, mentions: str):
 
     await interaction.channel.send("``` ```")
 
-@tree.command(name="template2", description="Posts template 2")
+@tree.command(name="checkpoint_format", description="Denies access to user because of wrong RP sample format or invalid access")
 @app_commands.describe(mentions="Users to ping (comma-separated, e.g., @user1, @user2)")
 async def post_template2(interaction: Interaction, mentions: str):
     if not has_required_role(interaction.user.roles):
@@ -200,7 +200,7 @@ async def post_template2(interaction: Interaction, mentions: str):
 
     await interaction.channel.send("``` ```")
 
-@tree.command(name="template3", description="Posts template 3")
+@tree.command(name="checkpoint_literacy", description="Denies access to user because of insufficient literacy")
 @app_commands.describe(mentions="Users to ping (comma-separated, e.g., @user1, @user2)")
 async def post_template3(interaction: Interaction, mentions: str):
     if not has_required_role(interaction.user.roles):
@@ -215,7 +215,7 @@ async def post_template3(interaction: Interaction, mentions: str):
 
     await interaction.channel.send("``` ```")
 
-@tree.command(name="template4", description="Posts template 4")
+@tree.command(name="checkpoint_fixes", description="Denies access to user because of needed fixes in RP sample")
 @app_commands.describe(mentions="Users to ping (comma-separated, e.g., @user1, @user2)")
 async def post_template4(interaction: Interaction, mentions: str):
     if not has_required_role(interaction.user.roles):
@@ -230,7 +230,7 @@ async def post_template4(interaction: Interaction, mentions: str):
 
     await interaction.channel.send("``` ```")
 
-@tree.command(name="template5", description="Posts template 5")
+@tree.command(name="checkpoint_approved", description="Allows access to user and changes user roles")
 @app_commands.describe(mentions="Users to ping (comma-separated, e.g., @user1, @user2)")
 async def post_template5(interaction: Interaction, mentions: str):
     if not has_required_role(interaction.user.roles):
@@ -245,7 +245,7 @@ async def post_template5(interaction: Interaction, mentions: str):
 
     await interaction.channel.send("``` ```")
 
-@tree.command(name="template6", description="Posts template 6")
+@tree.command(name="bio_inconsistency", description="Denies bio approval because user didn't follow instructions or didn't read RP info")
 @app_commands.describe(mentions="Users to ping (comma-separated, e.g., @user1, @user2)")
 async def post_template6(interaction: Interaction, mentions: str):
     if not has_required_role(interaction.user.roles):
@@ -261,8 +261,8 @@ async def post_template6(interaction: Interaction, mentions: str):
     await interaction.channel.send("``` ```")
 
 @tree.command(
-    name="template7",
-    description="Posts character rejection template with customizable feedback"
+    name="bio_fixes",
+    description="Denies bio approval because fixes are to be made. Include fixes in up to 5 comments (each is a separate paragraph)"
 )
 @app_commands.describe(
     mentions="Users to ping (comma-separated, e.g., @user1, @user2)",
@@ -322,7 +322,7 @@ async def post_template7(
     
     await interaction.channel.send("``` ```")
 
-@tree.command(name="template8", description="Posts template 8")
+@tree.command(name="bio_approved", description="Approves bio and changes user roles")
 @app_commands.describe(mentions="Users to ping (comma-separated, e.g., @user1, @user2)")
 async def post_template8(interaction: Interaction, mentions: str):
     if not has_required_role(interaction.user.roles):
