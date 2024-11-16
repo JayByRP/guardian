@@ -298,7 +298,7 @@ async def post_template7(
 > writing sample. Best regards,
 
 *⸻ 𝐓𝐡𝐞 𝐒𝐭𝐚𝐟𝐟 𝐓𝐞𝐚𝐦*
-    """.strip().format(comments="\n> \n".join(comments))
+    """.strip().format(comments="> \n> \n".join(comments))
 
     await interaction.channel.send(template)
     if mentions:
