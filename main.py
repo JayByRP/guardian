@@ -181,9 +181,9 @@ async def post_template1(interaction: Interaction, mentions: str):
         mention_list = parse_mentions(mentions)
         if mention_list:
             ping_message = " ".join(mention_list)
-            await interaction.channel.send(ping_message)
+            await interaction.response.send_message(ping_message)
 
-    await interaction.channel.send("``` ```")
+    await interaction.response.send_message("``` ```")
 
 @tree.command(name="checkpoint_format", description="Denies access to user because of wrong RP sample format or invalid access")
 @app_commands.describe(mentions="Users to ping (comma-separated, e.g., @user1, @user2)")
