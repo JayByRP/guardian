@@ -182,7 +182,7 @@ async def post_template1(interaction: Interaction, mentions: str):
         mention_list = parse_mentions(mentions)
         if mention_list:
             ping_message = " ".join(mention_list)
-            response_message += f"{ping_message}\n``` ```"  # Add mentions and code block
+            response_message += f"{ping_message}\n``` ```"
 
     await interaction.response.send_message(response_message)
 
@@ -192,14 +192,13 @@ async def post_template2(interaction: Interaction, mentions: str):
     if not has_required_role(interaction.user.roles):
         await interaction.response.send_message("❌ You don't have permission to use this command.", ephemeral=True)
         return
-    await interaction.channel.send(TEMPLATES["template2"])
+    response_message = f"{TEMPLATES['template2']}\n"
+    
     if mentions:
         mention_list = parse_mentions(mentions)
         if mention_list:
             ping_message = " ".join(mention_list)
-            await interaction.channel.send(ping_message)
-
-    await interaction.channel.send("``` ```")
+            response_message += f"{ping_message}\n``` ```"
 
 @tree.command(name="checkpoint_literacy", description="Denies access to user because of insufficient literacy")
 @app_commands.describe(mentions="Users to ping (comma-separated, e.g., @user1, @user2)")
@@ -207,14 +206,13 @@ async def post_template3(interaction: Interaction, mentions: str):
     if not has_required_role(interaction.user.roles):
         await interaction.response.send_message("❌ You don't have permission to use this command.", ephemeral=True)
         return
-    await interaction.channel.send(TEMPLATES["template3"])
+    response_message = f"{TEMPLATES['template3']}\n"
+    
     if mentions:
         mention_list = parse_mentions(mentions)
         if mention_list:
             ping_message = " ".join(mention_list)
-            await interaction.channel.send(ping_message)
-
-    await interaction.channel.send("``` ```")
+            response_message += f"{ping_message}\n``` ```"
 
 @tree.command(name="checkpoint_fixes", description="Denies access to user because of needed fixes in RP sample")
 @app_commands.describe(mentions="Users to ping (comma-separated, e.g., @user1, @user2)")
@@ -222,14 +220,13 @@ async def post_template4(interaction: Interaction, mentions: str):
     if not has_required_role(interaction.user.roles):
         await interaction.response.send_message("❌ You don't have permission to use this command.", ephemeral=True)
         return
-    await interaction.channel.send(TEMPLATES["template4"])
+    response_message = f"{TEMPLATES['template4']}\n"
+    
     if mentions:
         mention_list = parse_mentions(mentions)
         if mention_list:
             ping_message = " ".join(mention_list)
-            await interaction.channel.send(ping_message)
-
-    await interaction.channel.send("``` ```")
+            response_message += f"{ping_message}\n``` ```"
 
 @tree.command(name="checkpoint_approved", description="Allows access to user and changes user roles")
 @app_commands.describe(mentions="Users to ping (comma-separated, e.g., @user1, @user2)")
@@ -237,14 +234,13 @@ async def post_template5(interaction: Interaction, mentions: str):
     if not has_required_role(interaction.user.roles):
         await interaction.response.send_message("❌ You don't have permission to use this command.", ephemeral=True)
         return
-    await interaction.channel.send(TEMPLATES["template5"])
+    response_message = f"{TEMPLATES['template5']}\n"
+    
     if mentions:
         mention_list = parse_mentions(mentions)
         if mention_list:
             ping_message = " ".join(mention_list)
-            await interaction.channel.send(ping_message)
-
-    await interaction.channel.send("``` ```")
+            response_message += f"{ping_message}\n``` ```"
 
 @tree.command(name="bio_inconsistency", description="Denies bio approval because user didn't follow instructions or didn't read RP info")
 @app_commands.describe(mentions="Users to ping (comma-separated, e.g., @user1, @user2)")
@@ -252,14 +248,13 @@ async def post_template6(interaction: Interaction, mentions: str):
     if not has_required_role(interaction.user.roles):
         await interaction.response.send_message("❌ You don't have permission to use this command.", ephemeral=True)
         return
-    await interaction.channel.send(TEMPLATES["template6"])
+    response_message = f"{TEMPLATES['template6']}\n"
+    
     if mentions:
         mention_list = parse_mentions(mentions)
         if mention_list:
             ping_message = " ".join(mention_list)
-            await interaction.channel.send(ping_message)
-
-    await interaction.channel.send("``` ```")
+            response_message += f"{ping_message}\n``` ```"
 
 @tree.command(
     name="bio_fixes",
@@ -313,15 +308,13 @@ async def post_template7(
 *⸻ 𝐓𝐡𝐞 𝐒𝐭𝐚𝐟𝐟 𝐓𝐞𝐚𝐦*
     """.strip().format(comments="\n> \n".join(comments))
 
-    await interaction.channel.send(template)
-
+    response_message = template+"\n"
+    
     if mentions:
         mention_list = parse_mentions(mentions)
         if mention_list:
             ping_message = " ".join(mention_list)
-            await interaction.channel.send(ping_message)
-    
-    await interaction.channel.send("``` ```")
+            response_message += f"{ping_message}\n``` ```"
 
 @tree.command(name="bio_approved", description="Approves bio and changes user roles")
 @app_commands.describe(mentions="Users to ping (comma-separated, e.g., @user1, @user2)")
@@ -329,14 +322,13 @@ async def post_template8(interaction: Interaction, mentions: str):
     if not has_required_role(interaction.user.roles):
         await interaction.response.send_message("❌ You don't have permission to use this command.", ephemeral=True)
         return
-    await interaction.channel.send(TEMPLATES["template8"])
+    response_message = f"{TEMPLATES['template8']}\n"
+    
     if mentions:
         mention_list = parse_mentions(mentions)
         if mention_list:
             ping_message = " ".join(mention_list)
-            await interaction.channel.send(ping_message)
-    
-    await interaction.channel.send("``` ```")
+            response_message += f"{ping_message}\n``` ```"
 
 # FastAPI endpoints
 @app.get("/")
