@@ -247,23 +247,34 @@ async def post_template5(interaction: Interaction, mentions: str):
     successful_updates = []
     failed_updates = []
 
+    logger.info(f"Starting role update process for mentions: {mention_list}")
+
     for user_id in mention_list:
+        logger.info(f"Processing user ID: {user_id.strip('<@!>')}")
         user = interaction.guild.get_member(int(user_id.strip('<@!>')))
+        
         if user:
+            logger.info(f"Found user: {user.name} with ID: {user.id}")
             try:
                 for role_id in roles_to_add:
                     role = interaction.guild.get_role(role_id)
                     if role and role not in user.roles:
                         await user.add_roles(role)
                         successful_updates.append(f"Added {role.name} to {user.mention}")
+                        logger.info(f"Successfully added role {role.name} to {user.mention}")
 
                 role = interaction.guild.get_role(role_to_remove)
                 if role and role in user.roles:
                     await user.remove_roles(role)
                     successful_updates.append(f"Removed {role.name} from {user.mention}")
+                    logger.info(f"Successfully removed role {role.name} from {user.mention}")
 
             except Exception as e:
                 failed_updates.append(f"{user.mention}: {str(e)}")
+                logger.error(f"Failed to update roles for {user.mention}: {str(e)}")
+
+        else:
+            logger.warning(f"User  with ID {user_id.strip('<@!>')} not found in the guild.")
 
     # Send the ephemeral message with the results
     ephemeral_message = "Roles updated successfully for:\n" + "\n".join(successful_updates) if successful_updates else "No roles were updated successfully."
