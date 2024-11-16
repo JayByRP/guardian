@@ -2,8 +2,7 @@ import os
 import asyncio
 import logging
 from typing import List
-from fastapi import FastAPI, HTTPException
-from fastapi.responses import JSONResponse
+from fastapi import FastAPI
 from discord import app_commands, Intents, Client, Interaction
 from dotenv import load_dotenv
 
@@ -286,11 +285,11 @@ async def post_template7(
         await interaction.response.send_message("❌ You don't have permission to use this command.", ephemeral=True)
         return
 
-    comments = [f"**[1]** {comment1}"]
+    comments = [f"**[1]** :: {comment1}"]
     optional_comments = [comment2, comment3, comment4, comment5]
     for i, comment in enumerate(optional_comments, start=2):
         if comment:
-            comments.append(f"> **[{i}]** {comment}")
+            comments.append(f"> **[{i}]** :: {comment}")
 
     template = """
 > Thank you for submitting your character.
