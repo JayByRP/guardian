@@ -254,31 +254,31 @@ async def post_template6(interaction: Interaction, mentions: str):
     description="Posts character rejection template with customizable feedback"
 )
 @app_commands.describe(
+    mentions="Users to ping (comma-separated, e.g., @user1, @user2)",
     comment1="First paragraph (required)",
     comment2="Second paragraph (optional)",
     comment3="Third paragraph (optional)",
     comment4="Fourth paragraph (optional)",
-    comment5="Fifth paragraph (optional)",
-    mentions="Users to ping (comma-separated, e.g., @user1, @user2)"
+    comment5="Fifth paragraph (optional)"
 )
 async def post_template7(
     interaction: Interaction,
-    comment1: str,
     mentions: str,
+    comment1: str,
     comment2: str = None,
     comment3: str = None,
     comment4: str = None,
-    comment5: str = None,
+    comment5: str = None
 ):
     if not has_required_role(interaction.user.roles):
         await interaction.response.send_message("❌ You don't have permission to use this command.", ephemeral=True)
         return
 
-    comments = [f"**[1] ::** {comment1}"]
+    comments = [f"> {comment1}"]
     optional_comments = [comment2, comment3, comment4, comment5]
-    for i, comment in enumerate(optional_comments, start=2):
+    for comment in optional_comments:
         if comment:
-            comments.append(f"**[{i}] ::** {comment}")
+            comments.append(f"> {comment}")
 
     template = """
 > Thank you for submitting your character.
@@ -298,14 +298,15 @@ async def post_template7(
 > writing sample. Best regards,
 
 *⸻ 𝐓𝐡𝐞 𝐒𝐭𝐚𝐟𝐟 𝐓𝐞𝐚𝐦*
-    """.strip().format(comments="> \n> \n".join(comments))
+    """.strip().format(comments="> \n> ".join(comments))
 
-    await interaction.channel.send(template)
     if mentions:
         mention_list = parse_mentions(mentions)
         if mention_list:
             ping_message = " ".join(mention_list)
             await interaction.channel.send(ping_message)
+
+    await interaction.channel.send(template)
 
 @tree.command(name="template8", description="Posts template 8")
 @app_commands.describe(mentions="Users to ping (comma-separated, e.g., @user1, @user2)")
