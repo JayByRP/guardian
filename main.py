@@ -167,7 +167,10 @@ def parse_mentions(mentions_str: str) -> List[str]:
     """Parse comma-separated mentions string into a list of user IDs."""
     if not mentions_str:
         return []
-    return [mention.strip() for mention in mentions_str.split(',')]
+    
+    mention_list = [mention.strip() for mention in mentions_str.split(',')]
+    
+    return [mention for mention in mention_list if mention]
 
 def format_comment(comment: str, first_line_limit: int = 34, max_length: int = 42) -> str:
     if not comment:
@@ -208,7 +211,12 @@ def format_comment(comment: str, first_line_limit: int = 34, max_length: int = 4
     if current_line:
         formatted_lines.append(current_line)
 
-    return "\n".join(f"> {line}" for line in formatted_lines)
+    if len(formatted_lines) == 0:
+        return ""
+    elif len(formatted_lines) == 1:
+        return formatted_lines[0]
+    else:
+        return formatted_lines[0] + "\n" + "\n".join(f"> {line}" for line in formatted_lines[1:])
 
 
 # Template commands with ping support
