@@ -169,6 +169,32 @@ def parse_mentions(mentions_str: str) -> List[str]:
         return []
     return [mention.strip() for mention in mentions_str.split(',')]
 
+def format_comment(comment: str, max_length: int = 42) -> str:
+    """Format the comment to ensure lines do not exceed max_length."""
+    if not comment:
+        return ""
+    
+    words = comment.split()
+    formatted_lines = []
+    current_line = ""
+
+    for word in words:
+        if len(current_line) + len(word) + 1 > max_length:
+            if current_line:
+                formatted_lines.append(current_line)
+            current_line = word
+        else:
+            if current_line:
+                current_line += " " + word
+            else:
+                current_line = word
+
+    if current_line:
+        formatted_lines.append(current_line)
+
+    return "\n".join(formatted_lines)
+
+
 # Template commands with ping support
 @tree.command(name="checkpoint_minor", description="Denies access to underage users")
 @app_commands.describe(mentions="Users to ping (comma-separated, e.g., @user1, @user2)")
@@ -181,7 +207,7 @@ async def post_template1(interaction: Interaction, mentions: str):
     if mentions:
         mention_list = parse_mentions(mentions)
         if mention_list:
-            ping_message = " ".join(mention_list)
+            ping_message = ", ".join(mention_list)
             response_message += f"{ping_message}\n``` ```"
 
     await interaction.response.send_message(response_message)
@@ -197,7 +223,7 @@ async def post_template2(interaction: Interaction, mentions: str):
     if mentions:
         mention_list = parse_mentions(mentions)
         if mention_list:
-            ping_message = " ".join(mention_list)
+            ping_message = ", ".join(mention_list)
             response_message += f"{ping_message}\n``` ```"
 
     await interaction.response.send_message(response_message)
@@ -213,7 +239,7 @@ async def post_template3(interaction: Interaction, mentions: str):
     if mentions:
         mention_list = parse_mentions(mentions)
         if mention_list:
-            ping_message = " ".join(mention_list)
+            ping_message = ", ".join(mention_list)
             response_message += f"{ping_message}\n``` ```"
 
     await interaction.response.send_message(response_message)
@@ -229,7 +255,7 @@ async def post_template4(interaction: Interaction, mentions: str):
     if mentions:
         mention_list = parse_mentions(mentions)
         if mention_list:
-            ping_message = " ".join(mention_list)
+            ping_message = ", ".join(mention_list)
             response_message += f"{ping_message}\n``` ```"
 
     await interaction.response.send_message(response_message)
@@ -245,7 +271,7 @@ async def post_template5(interaction: Interaction, mentions: str):
     if mentions:
         mention_list = parse_mentions(mentions)
         if mention_list:
-            ping_message = " ".join(mention_list)
+            ping_message = ", ".join(mention_list)
             response_message += f"{ping_message}\n``` ```"
 
     await interaction.response.send_message(response_message)
@@ -298,7 +324,7 @@ async def post_template6(interaction: Interaction, mentions: str):
     if mentions:
         mention_list = parse_mentions(mentions)
         if mention_list:
-            ping_message = " ".join(mention_list)
+            ping_message = ", ".join(mention_list)
             response_message += f"{ping_message}\n``` ```"
 
     await interaction.response.send_message(response_message)
@@ -328,11 +354,11 @@ async def post_template7(
         await interaction.response.send_message("❌ You don't have permission to use this command.", ephemeral=True)
         return
 
-    comments = [f"**[1]** :: {comment1}"]
+    comments = [f"**[1]** :: {format_comment(comment1)}"]
     optional_comments = [comment2, comment3, comment4, comment5]
     for i, comment in enumerate(optional_comments, start=2):
         if comment:
-            comments.append(f"> **[{i}]** :: {comment}")
+            comments.append(f"> **[{i}]** :: {format_comment(comment)}")
 
     template = """
 > Thank you for submitting your character.
@@ -360,7 +386,7 @@ async def post_template7(
     if mentions:
         mention_list = parse_mentions(mentions)
         if mention_list:
-            ping_message = " ".join(mention_list)
+            ping_message = ", ".join(mention_list)
             response_message += f"{ping_message}\n``` ```"
 
     await interaction.response.send_message(response_message)
@@ -376,7 +402,7 @@ async def post_template8(interaction: Interaction, mentions: str):
     if mentions:
         mention_list = parse_mentions(mentions)
         if mention_list:
-            ping_message = " ".join(mention_list)
+            ping_message = ", ".join(mention_list)
             response_message += f"{ping_message}\n``` ```"
 
     await interaction.response.send_message(response_message)
