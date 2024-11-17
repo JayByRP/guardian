@@ -169,30 +169,46 @@ def parse_mentions(mentions_str: str) -> List[str]:
         return []
     return [mention.strip() for mention in mentions_str.split(',')]
 
-def format_comment(comment: str, max_length: int = 42) -> str:
-    """Format the comment to ensure lines do not exceed max_length."""
+def format_comment(comment: str, first_line_limit: int = 34, max_length: int = 42) -> str:
     if not comment:
         return ""
     
     words = comment.split()
     formatted_lines = []
     current_line = ""
+    first_line = True
 
     for word in words:
-        if len(current_line) + len(word) + 1 > max_length:
-            if current_line:
-                formatted_lines.append(current_line)
-            current_line = word
-        else:
-            if current_line:
-                current_line += " " + word
-            else:
+        if first_line:
+            if len(current_line) + len(word) + 1 > first_line_limit:
+                if current_line:
+                    formatted_lines.append(current_line)
                 current_line = word
+            else:
+                if current_line:
+                    current_line += " " + word
+                else:
+                    current_line = word
+            
+            if len(current_line) >= first_line_limit:
+                formatted_lines.append(current_line)
+                current_line = ""
+                first_line = False
+        else:
+            if len(current_line) + len(word) + 1 > max_length:
+                if current_line:
+                    formatted_lines.append(current_line)
+                current_line = word
+            else:
+                if current_line:
+                    current_line += " " + word
+                else:
+                    current_line = word
 
     if current_line:
         formatted_lines.append(current_line)
 
-    return "\n".join(formatted_lines)
+    return "\n".join(f"> {line}" for line in formatted_lines)
 
 
 # Template commands with ping support
@@ -331,31 +347,27 @@ async def post_template6(interaction: Interaction, mentions: str):
 
 @tree.command(
     name="bio_fixes",
-    description="Denies bio approval because fixes are to be made. Include fixes in up to 5 comments"
+    description="Denies bio approval because fixes are to be made. Include fixes in up to 3 comments"
 )
 @app_commands.describe(
     mentions="Users to ping (comma-separated, e.g., @user1, @user2)",
     comment1="First paragraph (required)",
     comment2="Second paragraph (optional)",
-    comment3="Third paragraph (optional)",
-    comment4="Fourth paragraph (optional)",
-    comment5="Fifth paragraph (optional)"
+    comment3="Third paragraph (optional)"
 )
 async def post_template7(
     interaction: Interaction,
     mentions: str,
     comment1: str,
     comment2: str = None,
-    comment3: str = None,
-    comment4: str = None,
-    comment5: str = None
+    comment3: str = None
 ):
     if not has_required_role(interaction.user.roles):
         await interaction.response.send_message("❌ You don't have permission to use this command.", ephemeral=True)
         return
 
     comments = [f"**[1]** :: {format_comment(comment1)}"]
-    optional_comments = [comment2, comment3, comment4, comment5]
+    optional_comments = [comment2, comment3]
     for i, comment in enumerate(optional_comments, start=2):
         if comment:
             comments.append(f"> **[{i}]** :: {format_comment(comment)}")
