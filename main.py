@@ -24,9 +24,10 @@ app = FastAPI()
 
 # Define allowed role IDs
 ALLOWED_ROLES = [
-    1307013563650412605,
-    1307013564850114560,
-    1307013559745511446
+    1331691498047148114,
+    1331691496872611952,
+    1331691495954317435,
+    1331691493735272490
 ]
 
 # Define templates
@@ -104,8 +105,8 @@ TEMPLATES = {
 > bring your characters to life in our server.
 > 
 > Before you continue, we suggest you pick
-> your #❧・colors and #❧・roles, then                     <#channel_id>
-> greet everyone in the #❧・main﹒chat.
+> your <#1331691594394632283> and <#1331691595417915434>, then
+> greet everyone in the <#1331691590950981762>.
 > We've prepared a [server guide](<https://docs.google.com/document/d/1jTfgXNh8guuxCgNGfAguUpDH9dZdamACisBYQvFs6oo/edit?usp=sharing>) to help
 > you navigate the different categories with
 > ease, and know each channel's purpose.
@@ -147,10 +148,10 @@ TEMPLATES = {
 > excited to see them in action.
 > 
 > Before you continue, we suggest you
-> remove your #✧・wanted﹒list post,
+> remove your <#1331691601558503555> post,
 > if applicable, or that you talk with the
 > person who posted the ad to bring it
-> down. Take a look at our #✧・directory,
+> down. Take a look at our <#1331691609959436399>,
 > and add your OC to the list. If you have
 > any questions or need guidance, don’t
 > hesitate to reach out. Best regards,
@@ -300,8 +301,8 @@ async def post_template5(interaction: Interaction, mentions: str):
 
     await interaction.response.send_message(response_message)
 
-    roles_to_add = ["1307013628326580295", "1307013626200326205"]
-    role_to_remove = "1307013626917421088"
+    roles_to_add = ["1331691503679967233"]
+    role_to_remove = "1331691504862892114"
     successful_updates = []
     failed_updates = []
 
@@ -427,8 +428,8 @@ async def post_template8(interaction: Interaction, mentions: str):
 
     await interaction.response.send_message(response_message)
 
-    role_to_add = "1307013626200326205"
-    role_to_remove = "1307013626917421088"
+    role_to_add = "1331691502757220464"
+    role_to_remove = "1331691505609609257"
     successful_updates = []
     failed_updates = []
 
